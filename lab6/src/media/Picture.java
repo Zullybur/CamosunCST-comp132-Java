@@ -279,15 +279,15 @@ public class Picture extends SimplePicture {
         for (Pixel pixelObj : pixelArray) {
             // get and alter the red value of the current pixel
             value = pixelObj.getRed();
-            value = (int)Math.round(value * (r + 1));
+            value = (int)(value * (r + 1));
             pixelObj.setRed(value);
             // get and alter the green value of the current pixel
             value = pixelObj.getGreen();
-            value = (int)Math.round(value * (r + 1));
+            value = (int)(value * (g + 1));
             pixelObj.setGreen(value);
             // get and alter the blue value of the current pixel
             value = pixelObj.getBlue();
-            value = (int)Math.round(value * (r + 1));
+            value = (int)(value * (b + 1));
             pixelObj.setBlue(value);
         }
     }
