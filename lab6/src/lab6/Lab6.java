@@ -10,6 +10,8 @@ import java.util.ArrayList;
  * Given a selected picture file, make changes to the colour properties in 
  * the file, show the changes, and check that the change was made properly.
  * 
+ * Created Feb 24 2016
+ * 
  * @author MattCasiro
  */
 public class Lab6 {
@@ -26,6 +28,11 @@ public class Lab6 {
         Picture pic = new Picture (FileChooser.pickAFile());
         pic.show();
         Picture pic2 = new Picture (pic);
+        Scanner scan = new Scanner(System.in);
+        int cX;
+        int cY;
+        int width;
+        int height;
         
         // Halve, double, and manually adjust red colour values of every pixel
         userContinue();
@@ -95,7 +102,7 @@ public class Lab6 {
         System.out.println("Resetting picture...");
         pic.hide();
         pic = new Picture (pic2);
-        pic.changeBlue(0.10);
+        pic.changeBlue(.10);
         pic.repaint();
         System.out.println("Changed blue.");
         testChange(pic2, pic, 0, 0, 0.10);
@@ -108,6 +115,27 @@ public class Lab6 {
         pic.repaint();
         System.out.println("Changed all.");
         testChange(pic2, pic, 0.15, -0.15, 0.15);
+        
+        // Request x, y, width & height for image area to edit
+        userContinue();
+        System.out.println("Resetting picture...");
+        pic.hide();
+        pic = new Picture (pic2);
+        pic.show();
+        System.out.println("Picture Width: " + pic.getWidth()+"\n"
+                + "Picture Height: " + pic.getHeight());
+        System.out.println("(x,y) = (0,0) in bottom left.");
+        System.out.println("Please enter an x-coordinate within the width:");
+        cX = getInt(0, pic.getWidth(), scan);
+        System.out.println("Please enter a y-coordinate within the height:");
+        cY = getInt(0, pic.getHeight(), scan);
+        System.out.println("Please enter a width, remaining inside the bounds:");
+        width = getInt(0, pic.getWidth() - cX, scan);
+        System.out.println("Please enter a height, remaining inside the bounds:");
+        height = getInt(0, pic.getHeight() - cY, scan);
+        pic.changeInnerSquare(cX, cY, width, height);
+        pic.repaint();
+        System.out.println("All done!");
     }
 
     /**
@@ -241,5 +269,19 @@ public class Lab6 {
                 return -1;
         }
         
+    }
+    
+    /**
+     * Get a positive integer value from the user that is within a given limit
+     * @return 
+     */
+    private static int getInt(int min, int max, Scanner scan) {
+        int newInt;
+        do {
+            newInt = scan.nextInt();
+            scan.nextLine();
+        } while (newInt < min || max < newInt);
+        
+        return newInt;
     }
 }

@@ -291,5 +291,27 @@ public class Picture extends SimplePicture {
             pixelObj.setBlue(value);
         }
     }
+
+    /**
+     * Accepts x, y coordinates and width, height parameters of a box within
+     * the user's image, then converts all pixels to white
+     * @param cX is the x coordinate where the box will start
+     * @param cY is the y coordinate where the box will start
+     * @param width how far to the right the box extends
+     * @param height how far up the box extends
+     */
+    public void changeInnerSquare(int cX, int cY, int width, int height) {
+        Pixel pixel;
+        Color color = new Color(255, 255, 255);
+        // Adjust to bottom-left coordinate system
+        cY = this.getHeight() - cY;
+        // Modify the pixels in the target area to pure white
+        for (int j = cY; j > (cY - height); j--) {
+            for (int i = cX; i < (cX + width); i++) {
+                pixel = this.getPixel(i, j);
+                pixel.setColor(color);
+            }
+        }
+    }
 } // end of class Picture, put all new methods before this
 
