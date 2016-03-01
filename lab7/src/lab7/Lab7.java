@@ -10,56 +10,54 @@ import java.util.Scanner;
  * Created: Feb 26 2016.
  * @author Matthew Casiro
  */
-public class Lab7{
+public class Lab7 {
 
 
     public static void main(String[] args) {
+        // Set image paths and program variables
         String fileSource = "/Users/MattCasiro/OneDrive/Camosun/comp132/labs/lab7/src/Beach.jpg";
-        String fileTarget = "/Users/MattCasiro/OneDrive/Camosun/comp132/labs/lab7/src/Flip.jpg";
-
+        String fileTarget1 = "/Users/MattCasiro/OneDrive/Camosun/comp132/labs/lab7/src/Pixellate.jpg";
+        String fileTarget2 = "/Users/MattCasiro/OneDrive/Camosun/comp132/labs/lab7/src/Offset.jpg";
         Picture source = new Picture(fileSource);
         Picture target = new Picture(source.getWidth(), source.getHeight());
-        
-        source.show();
-
-        target.flipHorizontal(source);
-        target.repaint();
-        
         Scanner scan = new Scanner(System.in);
         String input;
-        System.out.println("Press enter to add pixelation to source image.");
+        int num;
+        source.show();
+
+        System.out.println("Press enter to flip image.");
         input = scan.nextLine();
-        target.hide();
-        System.out.println("Running pixelation...");
-        source.runEffect1();
-        source.repaint();
-        System.out.println("Done.");
-        System.out.println("Press enter to add offset rows to source image.");
+        target.flipHorizontal(source);
+        target.repaint();
+        target.show();
+        source.hide();
+        
+        System.out.println("Press enter to show pixelation effect.");
         input = scan.nextLine();
-        source.runEffect2();
-        source.repaint();
+        target.copyPicture(source);
+        target.pixellate();
+        target.repaint();
+        System.out.println("Done, writing file to disk.");
+        target.write(fileTarget1);
         
-//        boolean userChoice;
-//        while (true) {
-//            input = scan.nextLine();
-//            if (input == "y" || input == "Y" || input == "yes" || input == "Yes" || input == "YES") {
-//                userChoice = true;
-//                break;
-//            } else if (input == "n" || input == "N" || input == "no" || input == "No" || input == "NO") {
-//                userChoice = false;
-//                break;
-//            }
-//        }
-//        if (userChoice) {
-//            
-//        }
+        System.out.println("Press enter show offset rows effect.");
+        input = scan.nextLine();
+        target.copyPicture(source);
+        target.offsetPixels(source);
+        target.repaint();
+        System.out.println("Done, writing file to disk.");
+        target.write(fileTarget2);
         
-        
-        
-        //target.repaint();
-
-
-
-
+        System.out.println("Select a horizontal line on which to mirror,\n"
+                + "between 0 and "+ (source.getHeight() - 1) +":");
+        do {
+            num = scan.nextInt();
+            scan.nextLine();
+        } while (0 > num || num >= source.getHeight());
+        target.copyPicture(source);
+        target.mirrorHorizontal(source, num);
+        target.repaint();
+        target.show();
+        System.out.println("Program Complete");
     }
 }

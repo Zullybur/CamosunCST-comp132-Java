@@ -314,9 +314,9 @@ public class Picture extends SimplePicture {
     /**
      * Pixelate the image.
      */
-    public void runEffect1() {
+    public void pixellate() {
         int arrayLoc, red, green, blue, i, j;
-        int pixelation = 1;
+        int pixelation = 5;
         int square = pixelation * pixelation;
         Pixel[] pixelSet = new Pixel[square];
         
@@ -359,9 +359,11 @@ public class Picture extends SimplePicture {
     /**
      * Skew pixels to the right by a given amount, increasing by double the
      * original skew amount every 'num' rows. Wrap pixels around image.
+     * 
+     * @param source original picture to use for conversion
      */
-    public void runEffect2() {
-        Picture tmp = new Picture(this);
+    public void offsetPixels(Picture source) {
+        Picture tmp = new Picture(source);
         int shift = 0, split = 10;
         int offset = this.getWidth() / split;
         int incShift = this.getHeight() / split;
@@ -379,6 +381,24 @@ public class Picture extends SimplePicture {
                     origPix = this.getPixel(cX + shift, cY);
                 }
                 origPix.setColor(tmpPix.getColor());
+            }
+        }
+    }
+    /**
+     * Create a mirrored effect on a supplied image at the given horizontal
+     * line on the picture.
+     * 
+     * @param source is the picture to work from
+     * @param num is the horizontal line on which to mirror
+     */
+    public void mirrorHorizontal(Picture source, int num) {
+        Pixel src, tgt;
+        System.out.println("This: "+this.getWidth()+", Source: "+source.getWidth());
+        for (int i = 0; i < this.getWidth(); i++) {
+            for (int k = 0; num + k < this.getHeight() && k < num; k++) {
+                tgt = this.getPixel(i, num + k);
+                src = source.getPixel(i, num - k);
+                tgt.setColor(src.getColor());
             }
         }
     }

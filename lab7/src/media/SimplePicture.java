@@ -343,7 +343,6 @@ public class SimplePicture implements DigitalPicture
  {
    if (pictureFrame != null) {
      pictureFrame.setVisible(false);
-     pictureFrame.close();
    }
  }
  
