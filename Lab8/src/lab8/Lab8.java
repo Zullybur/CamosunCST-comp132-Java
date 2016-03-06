@@ -1,7 +1,7 @@
 /*
  * Flip a picture on the horizontal axis and add image effects
  */
-package lab7;
+package lab8;
 
 import media.*;
 import java.util.Scanner;
@@ -10,7 +10,7 @@ import java.util.Scanner;
  * Created: Feb 26 2016.
  * @author Matthew Casiro
  */
-public class Lab7 {
+public class Lab8 {
 
 
     public static void main(String[] args) {
@@ -59,5 +59,9 @@ public class Lab7 {
         target.repaint();
         target.show();
         System.out.println("Program Complete");
+    }
+    
+    private static void drawCollage() {
+        
     }
 }

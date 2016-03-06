@@ -402,5 +402,9 @@ public class Picture extends SimplePicture {
             }
         }
     }
+    
+   public void makeCollage(Picture[] pics) {
+       
+   }
 } // end of class Picture, put all new methods before this
 
