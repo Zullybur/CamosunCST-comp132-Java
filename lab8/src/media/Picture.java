@@ -274,9 +274,9 @@ public class Picture extends SimplePicture {
         }
     }
 
-    public void copyPictureOffset(Picture sourcePicture) {
+    public void copyPictureOffset(Picture sourcePicture, int x, int y) {
         Pixel sourcePixel, targetPixel;
-        int startX = 100, startY = 100;
+        int startX = x, startY = y;
 
         //loop through both pictures simultaenously
         for (int sourceX = 0, targetX = startX; sourceX < sourcePicture.getWidth(); sourceX++, targetX++) {
@@ -402,9 +402,47 @@ public class Picture extends SimplePicture {
             }
         }
     }
-    
-   public void makeCollage(Picture[] pics) {
-       
+    /**
+     * Paints a given array of pictures on to a canvas assuming that provided
+     * pictures match the dimension ratio of the canvas.
+     * 
+     * @param pics is an array of picture objects.
+     */
+    public void makeCollage(Picture[] pics) {
+        int yOff = 0, x = 0, y = 0, effect;
+        int baseW = this.getWidth(), baseH = this.getHeight();
+        // Iterate through pictures and add to canvas
+        System.out.println("DEBUG: baseW: "+baseW+", baseH: "+baseH);
+        for(int i = 0; i < 5; i++) {
+            System.out.println("DEBUG: i = "+i);
+            for (Picture pic : pics) {
+                System.out.println("x: "+x+", y: "+y);
+                // Ensure pic is smaller than canvas
+                if(pic.getWidth() <= baseW && pic.getHeight() <= baseH) {
+                    // Track tallest picture in row
+                    if (pic.getHeight() > yOff) {
+                        yOff = pic.getHeight();
+                    }
+                    // Jump to next row if pic is too big for current row
+                    if (pic.getWidth() + x > baseW) {
+                        y += yOff;
+                        yOff = 0;
+                        x = 0;
+                    }
+                    // Jump back to top left if image does not fit vertically
+                    if(pic.getHeight() + y > baseH) {
+                        x = 0;
+                        y = 0;
+                        System.out.println("Canvas full, returning to top left.");
+                    }
+                    // Add effect to image
+                    
+                    this.copyPictureOffset(pic, x, y);
+                    x += pic.getWidth();
+                } else {
+                    System.out.println("Current image does not fit on canvas (skipped).");
+                }
+            }
+        }
    }
 } // end of class Picture, put all new methods before this
-

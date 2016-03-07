@@ -3,6 +3,8 @@
  */
 package lab8;
 
+import java.util.ArrayList;
+import java.util.List;
 import media.*;
 import java.util.Scanner;
 
@@ -14,7 +16,37 @@ public class Lab8 {
 
 
     public static void main(String[] args) {
-        // Set image paths and program variables
+        drawCollage();
+    }
+    /**
+     * Lab 8 code - create picture collage with effects using multiple images
+     */
+    private static void drawCollage() {
+        Picture tmp;
+        // Create list of pics to accomodate scaleability in size
+        List<Picture> picList = new ArrayList<>();
+        tmp = new Picture("/Users/MattCasiro/OneDrive/Camosun/comp132/labs/lab8/src/india01.jpg");
+        picList.add(tmp);
+        tmp = new Picture("/Users/MattCasiro/OneDrive/Camosun/comp132/labs/lab8/src/india02.jpg");
+        picList.add(tmp);
+        tmp = new Picture("/Users/MattCasiro/OneDrive/Camosun/comp132/labs/lab8/src/hawaii01.jpg");
+        picList.add(tmp);
+        tmp = new Picture("/Users/MattCasiro/OneDrive/Camosun/comp132/labs/lab8/src/hawaii02.jpg");
+        picList.add(tmp);
+        tmp = new Picture("/Users/MattCasiro/OneDrive/Camosun/comp132/labs/lab8/src/hawaii03.jpg");
+        picList.add(tmp);
+        // Convert list to array to send standard output to makeCollage
+        Picture[] pics = new Picture[picList.size()];
+        pics = picList.toArray(pics);
+        
+        Picture canvas = new Picture("/Users/MattCasiro/OneDrive/Camosun/comp132/labs/lab8/src/1kCanvas.jpg");
+        canvas.makeCollage(pics);
+        canvas.write("/Users/MattCasiro/OneDrive/Camosun/comp132/labs/lab8/src/1kCollage.jpg");
+    }
+    /**
+     * Lab 7 extricated code.
+     */
+    private static void lab7() {
         String fileSource = "/Users/MattCasiro/OneDrive/Camosun/comp132/labs/lab7/src/Beach.jpg";
         String fileTarget1 = "/Users/MattCasiro/OneDrive/Camosun/comp132/labs/lab7/src/Pixellate.jpg";
         String fileTarget2 = "/Users/MattCasiro/OneDrive/Camosun/comp132/labs/lab7/src/Offset.jpg";
@@ -59,9 +91,5 @@ public class Lab8 {
         target.repaint();
         target.show();
         System.out.println("Program Complete");
-    }
-    
-    private static void drawCollage() {
-        
     }
 }
