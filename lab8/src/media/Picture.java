@@ -411,6 +411,7 @@ public class Picture extends SimplePicture {
     public void makeCollage(Picture[] pics) {
         int yOff = 0, x = 0, y = 0, effect;
         int baseW = this.getWidth(), baseH = this.getHeight();
+        Picture tmp;
         // Iterate through pictures and add to canvas
         System.out.println("DEBUG: baseW: "+baseW+", baseH: "+baseH);
         for(int i = 0; i < 5; i++) {
@@ -436,8 +437,37 @@ public class Picture extends SimplePicture {
                         System.out.println("Canvas full, returning to top left.");
                     }
                     // Add effect to image
-                    
-                    this.copyPictureOffset(pic, x, y);
+                    effect = (int)(Math.random() * 10);
+                    if (effect > 4){
+                        effect -= 5;
+                    }
+                    System.out.println("Random number: "+effect);
+                    tmp = new Picture(pic);
+                    switch(effect) {
+                        case 0:
+                            tmp.pixellate();
+                            break;
+                        case 1:
+                            tmp.increaseBlue();
+                            tmp.decreaseGreen();
+                            break;
+                        case 2:
+                            tmp.increaseBlue();
+                            tmp.pixellate();
+                            break;
+                        case 3:
+                            tmp.changeColours(.5, -.5, .75);
+                            tmp.offsetPixels(pic);
+                            break;
+                        case 4:
+                            tmp.changeGreen(.25);
+                            tmp.decreaseRed();
+                            tmp.pixellate();
+                            break;
+                        default:
+                            System.out.println("Random number generator failed.");
+                    }
+                    this.copyPictureOffset(tmp, x, y);
                     x += pic.getWidth();
                 } else {
                     System.out.println("Current image does not fit on canvas (skipped).");
